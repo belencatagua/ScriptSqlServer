@@ -1,0 +1,59 @@
+/*==============================================================*/
+/* Table: MATERIA                                               */
+/*==============================================================*/
+create table MATERIA (
+   ID_MATERIA  int            not null,
+   CURSO  VARCHAR(15)            not null,
+   HORAS            int                  not null,
+   NOMBRE_MATERIA            VARCHAR(30)                  not null,
+   constraint PK_MATERIA primary key (ID_MATERIA)
+)
+go 
+
+/*==============================================================*/
+/* Table: PERSONA                                               */
+/*==============================================================*/
+create table PERSONA (
+   ID_PERSONA  int not null ,
+   NOMBRE  VARCHAR(30)        not null,
+   APELLIDO            VARCHAR(30)                  not null,
+   CEDULA            INT                  not null,
+   SEXO            VARCHAR(30)                  not null,
+   TELEFONO            INT                  not null,
+   FECHA_NACIMIENTO     timestamp with time zone default now(),
+   DIRECCION            VARCHAR(60)                  not null,
+   TIPO_PERSONA            VARCHAR(30)                  not null,
+   constraint PK_PERSONA primary key (ID_PERSONA)
+)
+go
+
+/*==============================================================*/
+/* Table: NOTA                                               */
+/*==============================================================*/
+
+create table NOTA (
+   ID_NOTA  int not null primary key,
+   ID_DET_PERSONA_MATERIA  int            not null,
+   CALIFICACION            int                  not null,
+   DESCRIPCION            VARCHAR(60)                  not null,
+   CONSTRAINT DET_PERSONA_MATERIA_FK FOREIGN KEY(ID_DET_PERSONA_MATERIA)
+   REFERENCES DET_PERSONA_MATERIA (ID_DET_PERSONA_MATERIA) 
+)
+go
+
+/*==============================================================*/
+/* Table: DET_PERSONA_MATERIA                                               */
+/*==============================================================*/
+
+create table DET_PERSONA_MATERIA (
+   ID_DET_PERSONA_MATERIA  int not null primary key,
+   ID_MATERIA  int            not null,
+   ID_PERSONA            int                  not null,
+   CALIFICACION_FINAL            int                  not null,
+   ESTADO            VARCHAR(30)                  not null,
+   CONSTRAINT MATERIA_FK FOREIGN KEY(ID_MATERIA)
+   REFERENCES MATERIA (ID_MATERIA),
+   CONSTRAINT PERSONA_FK FOREIGN KEY(ID_PERSONA)
+   REFERENCES PERSONA (ID_PERSONA)
+)
+go
